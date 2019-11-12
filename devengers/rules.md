@@ -23,7 +23,7 @@ Remember that hackathons are like marathons. Some people go to compete but most 
 11. Teams must stop hacking once the time is up. However, teams are allowed to debug and make small fixes to their programs after time is up. e.g. If during demoing your hack you find a bug that breaks your application and the fix is only a few lines of code, it's okay to fix that. Making large changes or adding new features is not allowed.
 12. Projects that violate the Code of Conduct are not allowed.
 13. Teams can be disqualified from the competition at the organisers' discretion. Reasons might include but are not limited to breaking the Competition Rules, breaking the Code of Conduct, or other unsporting behaviour.
-14. Being an Open Source Hackathon, each and every project developed at LNMHacks 4.0 should be open source having appropriate License Documents to avoid any unauthorised use of the same.
+14. Being an Open Source Hackathon, each and every project developed at Hacknight x.0 should be open source having appropriate License Documents to avoid any unauthorised use of the same.
 
 
 ## Judging Criteria
