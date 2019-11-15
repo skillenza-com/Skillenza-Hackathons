@@ -20,12 +20,7 @@ _Please complete all applicable._
 - **Where to find you?**: _Mention the room you're sitting in so we can find you_
 - **Demo Link**: _(if any, this might contain a website/ mobile application link/ short video, etc.)_
 - **Repository Link(s)**: _Provide us the link to your code. All judges must be able to access it._
-- **Prize Categories Enrolled for**:
-   (Please tick any specific Category that applies)
-  - [ ] Best use of Microsoft Azure
-  - [ ] Best Beginner (Your team should be atleast 50% Beginners)
-  - [ ] Best "Jugaad" - Best Fun/ Silly/ Innovative Hack
-  - [ ] Best UIPath Hack
+
 
 ## 🔥 Your Pitch
 _Kindly write a pitch for your project. Please do not use more than 500 words_
