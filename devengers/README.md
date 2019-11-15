@@ -27,10 +27,19 @@ One has to mark appropriate name in order to a submission valid for the Hacknigh
 
 ## Project Field:
 Choose from
-#### `Best use of Microsoft Azure`
-#### `Best Beginner (Your team should be atleast 50% Beginners)`
-#### `Best "Jugaad" - Best Fun/ Silly/ Innovative Hack`
-#### `Best UIPath Hack`
+#### `App Service`
+#### `PlayFeb`
+#### `Azure Functions`
+#### `Web Apps`
+#### `API Management`
+#### `Azure Cosmos DB`
+#### `Azure SQL Database`
+#### `Azure Blockchain Service`
+#### `Azure Media Services`
+#### `Azure Cognitive Services`
+#### `Azure Bot Services`
+#### `Azure Machine Learning`
+#### `Azure Databricks`
 
 #### In case of any confusion, you can ask your nearest Skillenza Staff members to help you out with the same.
 
