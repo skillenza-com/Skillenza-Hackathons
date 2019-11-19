@@ -2,7 +2,7 @@
 name: 'Hackathon Submission '
 about: 'Hackathon Project Submission '
 title: TEAM NAME - PROJECT NAME
-labels: Hacknight-3.0
+labels: Hacknight-3.0, Hacknight 4.0
 assignees: suryaskillenza
 
 ---
