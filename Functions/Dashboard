@@ -1,0 +1,54 @@
+import boto3
+import json
+import decimal
+from botocore.vendored import requests
+from boto3.dynamodb.conditions import Key, Attr
+
+
+def lambda_handler(event, context):
+    # TODO implement
+    dynamodb = boto3.resource('dynamodb') 
+    table_Claimed = dynamodb.Table('Claimed')
+    table_Documents = dynamodb.Table('Documents')
+    table_Rewards = dynamodb.Table('Rewards')
+    table_Trips = dynamodb.Table('Trips')
+    
+    response_rewards = table_Rewards.scan()
+    items_rewards = response_rewards['Items']
+    print (items_rewards)
+    
+    response_trips = table_Trips.scan()
+    items_trips = response_trips['Items']
+
+    response_claimed = table_Claimed.scan()
+    items_claimed = response_claimed['Items']
+    
+    sum_rewards=0
+    sum_trips=0
+    sum_claimed=0
+    i=0
+    for item in items_trips:
+        sum_trips=sum_trips+int(item['Cost'])
+        i+=1
+        
+    for item in items_rewards:
+        sum_rewards=sum_rewards+int(item['Reward_value'])
+    
+    for item in items_claimed:
+        sum_claimed=sum_claimed+int(item['Claimed_value'])
+        
+        params= {
+            "trips": sum_trips,
+            "rewards": sum_rewards,
+            "claimed" : sum_claimed,
+            "total": i
+        }
+        
+        
+    
+        
+    return {
+        'statusCode': 200,
+        'body': json.dumps(params)
+    }
+

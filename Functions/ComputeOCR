@@ -1,0 +1,136 @@
+import json
+import boto3
+import random
+from botocore.vendored import requests
+import math
+
+def lambda_handler(event, context):
+    # TODO implement
+    
+   #data=json.loads(event['body'])
+   # print (data)
+    
+    type="ocr"
+    path= "https://qph.fs.quoracdn.net/main-qimg-bbbd1a99c44f892c9210e2a82d39b916"
+    
+    #path="https://mshack2020.s3.amazonaws.com/uploads/image.jpg"
+    s3 = boto3.resource('s3')
+    dynamodb = boto3.resource('dynamodb')
+    
+    table_Claimed = dynamodb.Table('Claimed')
+    table_Documents = dynamodb.Table('Documents')
+    table_Rewards = dynamodb.Table('Rewards')
+    table_Trips = dynamodb.Table('Trips')
+    
+    bucket = s3.Bucket('mshack2020')
+    
+    url='http://datalake.intelligeni.com:9999/getocr'
+    headers = {'Content-Type': 'application/json'}
+   
+    
+    
+    table_Documents.put_item(
+                        Item={ 
+                            'Path': path,
+                            'Type' : type,
+                            'Current_status' : 'Unrewarded'
+                }
+                )
+
+    if type == "ocr":
+        
+        #params=json.dumps(params)
+        params={'type': type, 'image': path }
+        response = requests.request("POST", url, json=params,headers=headers,verify=False) 
+        print (response.json())
+        result_ocr=response.json()
+        
+        date = result_ocr['date'] 
+        print (date)
+        print("1")
+        distance= result_ocr['distance']
+        start=result_ocr['from']
+        end=result_ocr['to']
+        cost=(result_ocr['fare'])
+        trip_id=result_ocr['tripId']
+        mode= 'KSRTC'
+        
+    elif type == 'document':
+        params={'type': type, 'pdf': path }
+        response = requests.request("POST", url, headers=headers, json=params, verify=False) 
+        print (response)
+        result_doc=response.json()
+        print (result_doc)
+        date = result_doc['date']
+        distance= int(result_doc['distance'])
+        start=result_doc['from']
+        end=result_doc['to']
+        cost=int(result_doc['fare'])
+        trip_id=result_doc['tripId']
+        mode=result_doc['mode']
+        
+    
+    elif mode == 'Uber':
+        Image = "  https://upload.wikimedia.org/wikipedia/commons/7/79/Uber_App_Icon.svg"
+    elif mode == "Ola":
+        Image = "https://res-5.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_120,w_120,f_auto,b_white,q_auto:eco/v1459446250/xx0u5xwwzygivm67ogsk.jpg"
+    elif mode == 'Quickride':
+        Image = "https://pbs.twimg.com/profile_images/1095218429798182912/qvGI0No-_400x400.jpg"
+        
+    table_Trips.put_item(
+                        Item={ 
+                            'Path': path,
+                            'Type' : type,
+                            'Date' : date,
+                            'Start' : start,
+                            'End': end,
+                            'Cost': str(cost),
+                            'Trip_ID': trip_id,
+                            'Distance': str(distance),
+                            
+                            
+                }
+                )
+    if mode == 'KSRTC':
+        value = int(cost/2 + distance)
+    elif mode == 'Ola' or mode == 'Uber':
+        value = int(cost/5 + distance)
+    elif mode == 'Quickride':
+        value = int(cost/3 +distance)
+        
+    table_Rewards.put_item(
+                        Item={ 
+                            'Path': path,
+                            'Type' : type,
+                            'Date' : date,
+                            'Start' : start,
+                            'End': end,
+                            'Cost': str(cost),
+                            'Trip_ID': trip_id,
+                            'Distance': str(distance),
+                            'Mode': 'KSRTC',
+                            'Reward_value': str(value)
+                            
+                }
+                )
+                
+    response = table_Documents.update_item(
+            Key={
+                'Path': path
+                },
+            UpdateExpression="set Current_status = :r",
+            ExpressionAttributeValues={
+        ':r': 'Reward points awarded'
+    },
+    ReturnValues="UPDATED_NEW"
+)
+        
+        
+    
+        
+         
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Hello from Lambda!')
+    }
+
