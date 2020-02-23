@@ -1,0 +1,27 @@
+import boto3
+import json
+import decimal
+from botocore.vendored import requests
+from boto3.dynamodb.conditions import Key, Attr
+
+
+def lambda_handler(event, context):
+    # TODO implement
+    #data=json.loads(event['body']['trip_id'])
+    dynamodb = boto3.resource('dynamodb') 
+    table = dynamodb.Table('Claimed')
+    
+    response = table.scan()
+    items = response['Items']
+    print(items)
+
+    headers = {'Content-Type': 'application/json'}
+    params={ 'claimed' : items }
+    print (params)
+    
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps(params)
+    }
+

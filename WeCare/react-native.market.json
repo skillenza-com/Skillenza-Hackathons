@@ -1,0 +1,15 @@
+{
+  "config": {
+    "allow_rename": true,
+    "provider": "firebase",
+    "params": [],
+    "remove_files": [
+      "./android/.gradle",
+      "./android/app/build",
+      "./android/app/google-services.json",
+      "./ios/build",
+      "./ios/Pods",
+      "./ios/FirebaseAuthenticationKit/GoogleService-Info.plist"
+    ]
+  }
+}
